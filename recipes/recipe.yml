@@ -12,6 +12,12 @@ image-version: stable # You can pin to a specific version of Fedora as well
 # module configuration, executed in order
 # you can include multiple instances of the same module
 modules:
+  - type: script
+    snippets:
+      - "curl -Lo /etc/yum.repos.d/terra.repo https://github.com/terrapkg/subatomic-repos/raw/main/terra.repo"
+      - "sed -i 's/gpgcheck=1/gpgcheck=0/g' /etc/yum.repos.d/terra.repo"
+      - "sed -i 's/repo_gpgcheck=1/repo_gpgcheck=0/g' /etc/yum.repos.d/terra.repo"
+      
   - type: files
     files:
       - source: system
@@ -20,26 +26,51 @@ modules:
   - type: dnf
     repos:
       copr:
-        - atim/starship
+        #- atim/starship
+        - faugus/faugus-launcher
     install:
       packages:
-        - micro
-        - starship
-    remove:
-      packages:
+        #- micro
+        #- starship
+        - ghostty
+        - fastfetch
+        - freerdp
+        - pamixer
+        - niri
+        - waybar
+        - swaybg
+        - slurp
+        - fuzzel
+        - grim
+        - ideviceinstaller
+        #- liquidctl
+        - noctalia-shell
+        - noctalia-qs
+        #- steam
+        - faugus-launcher
+        - fcitx5
+        - fcitx5-chinese-addons
+        - fcitx5-configtool
+        - zsh
+        - coolercontrol
+        #- localsend
+        
+    #remove:
+      #packages:
         # example: removing firefox (in favor of the flatpak)
         # "firefox" is the main package, "firefox-langpacks" is a dependency
-        - firefox
-        - firefox-langpacks # also remove firefox dependency (not required for all packages, this is a special case)
+        # - firefox
+        # - firefox-langpacks # also remove firefox dependency (not required for all packages, this is a special case)
 
-  - type: default-flatpaks
-    configurations:
-      - notify: true # Send notification after install/uninstall is finished (true/false)
-        scope: system
-        # If no repo information is specified, Flathub will be used by default
-        install: # system flatpaks we want all users to have and not remove
-          - org.mozilla.firefox
-          - org.gnome.Loupe
-      - scope: user # Also add Flathub user repo, but no user packages
+  #- type: default-flatpaks
+  #  configurations:
+  #    - notify: true # Send notification after install/uninstall is finished (true/false)
+  #      scope: system
+  #      # If no repo information is specified, Flathub will be used by default
+  #      install: # system flatpaks we want all users to have and not remove
+  #        - com.carpeludum.KegaFusion
+  #      #  - org.mozilla.firefox
+  #      #  - org.gnome.Loupe
+  #    - scope: user # Also add Flathub user repo, but no user packages
 
   - type: signing # this sets up the proper policy & signing files for signed images to work fully
