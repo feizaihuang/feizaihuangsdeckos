@@ -53,7 +53,8 @@ modules:
         - fcitx5-configtool
         - zsh
         - coolercontrol
-        #- localsend
+        - neovim
+        - localsend-bin
         
     #remove:
       #packages:
